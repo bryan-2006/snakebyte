@@ -16,3 +16,6 @@ out/
 # Ignore local IDE files
 .vscode/
 .DS_Store
+
+# Turborepo
+.turbo/

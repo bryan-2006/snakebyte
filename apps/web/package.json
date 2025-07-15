@@ -11,7 +11,7 @@
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
-    "@snakebyte/types": "^1.0.0",
+    "@snakebyte/shared": "file:../../packages/shared",
     "@stripe/react-stripe-js": "^3.7.0",
     "@stripe/stripe-js": "^7.4.0",
     "framer-motion": "^12.23.3",

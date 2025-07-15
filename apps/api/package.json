@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "ts-node-dev src/index.ts"
   },
   "keywords": [],
   "author": "",
@@ -14,13 +15,18 @@
     "@apollo/server": "^4.12.2",
     "@mikro-orm/core": "^6.4.16",
     "@mikro-orm/postgresql": "^6.4.16",
-    "@snakebyte/types": "^1.0.0",
+    "@snakebyte/shared": "file:../../packages/shared",
     "class-validator": "^0.14.2",
+    "cors": "^2.8.5",
     "dotenv": "^17.2.0",
     "express": "^4.21.2",
     "graphql": "^16.11.0",
     "pg": "^8.16.3",
     "reflect-metadata": "^0.2.2",
     "type-graphql": "^2.0.0-rc.2"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.12",
+    "ts-node-dev": "^2.0.0"
   }
 }
