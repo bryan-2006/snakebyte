@@ -1,13 +1,10 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-import { Providers } from "./providers";
+import '../../styles/global.css';
+import { Providers } from './providers';
+import Navbar from '../components/Navbar';
 
-const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "Snakebyte",
-  description: "Course platform",
+export const metadata = {
+  title: 'SnakeByte',
+  description: 'Learn to code in a fun, interactive way!',
 };
 
 export default function RootLayout({
@@ -17,8 +14,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className} suppressHydrationWarning={true}>
-        <Providers>{children}</Providers>
+      <body suppressHydrationWarning={true} className='dark'>
+        <Providers>
+          <Navbar />
+          {children}
+        </Providers>
       </body>
     </html>
   );
