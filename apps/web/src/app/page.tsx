@@ -2,61 +2,129 @@
 
 import Link from "next/link";
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation'; 
+import { signIn } from 'next-auth/react';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 import { Terminal, Code2, Zap, Shield, ArrowRight } from 'lucide-react';
 
 export default function HomePage() {
   const [terminalText, setTerminalText] = useState('');
-  const fullText = 'Welcome to SnakeByte - Where Code Meets Adventure!';
+  const [showOptions, setShowOptions] = useState(false);
+  const router = useRouter();
+  const asciiArt = `███████╗███╗   ██╗ █████╗ ██╗  ██╗███████╗
+██╔════╝████╗  ██║██╔══██╗██║ ██╔╝██╔════╝
+███████╗██╔██╗ ██║███████║█████╔╝ █████╗  
+╚════██║██║╚██╗██║██╔══██║██╔═██╗ ██╔══╝  
+███████║██║ ╚████║██║  ██║██║  ██╗███████╗
+╚══════╝╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
+                                          
+██████╗ ██╗   ██╗████████╗███████╗        
+██╔══██╗╚██╗ ██╔╝╚══██╔══╝██╔════╝        
+██████╔╝ ╚████╔╝    ██║   █████╗          
+██╔══██╗  ╚██╔╝     ██║   ██╔══╝          
+██████╔╝   ██║      ██║   ███████╗        
+╚═════╝    ╚═╝      ╚═╝   ╚══════╝        
+
+Welcome to SnakeByte - Where Code Meets Adventure!`;
+
+  const commands = [
+    { cmd: 'login', description: 'Sign in to your account', path: '' },
+    { cmd: 'courses', description: 'View available programming courses', path: '/courses' },
+    { cmd: 'about', description: 'Learn more about SnakeByte', path: '' },
+    { cmd: 'contact-us', description: 'Reach out to us', path: '' },
+  ];
 
   useEffect(() => {
     let index = 0;
     const timer = setInterval(() => {
-      if (index < fullText.length) {
-        setTerminalText(fullText.slice(0, index + 1));
+      if (index < asciiArt.length) {
+        setTerminalText(asciiArt.slice(0, index + 1));
         index++;
       } else {
         clearInterval(timer);
+        setTimeout(() => setShowOptions(true), 500);
       }
-    }, 50);
+    }, 5);
 
     return () => clearInterval(timer);
   }, []);
 
+    const handleCommandClick = (cmd: string) => {
+    switch (cmd) {
+      case 'login':
+        signIn('google');
+        break;
+      case 'courses':
+        router.push('/courses');
+        break;
+      case 'about':
+        break;
+      case 'contact-us':
+        break;
+      default:
+        break;
+    }
+    
+  };
+
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative py-20 lg:py-32">
+      {/* Hero Section with Terminal */}
+      <section className="relative py-8 lg:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <div className="mb-8">
-              { //<Terminal className="h-16 w-16 text-green-400 mx-auto mb-4" />
-              }
-              <div className="bg-black/50 border border-green-400/30 rounded-lg p-4 font-mono text-left max-w-2xl mx-auto">
-                <div className="flex items-center mb-2">
-                  <div className="flex space-x-2">
-                    <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                    <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-                    <div className="w-3 h-3 rounded-full bg-green-500"></div>
+          <div className="text-center mb-8">
+            {/* {<Terminal className="h-12 w-12 lg:h-16 lg:w-16 text-green-400 mx-auto mb-6" />} */}
+            
+            {/* Large Responsive Terminal */}
+            <div className="bg-black/90 border-2 border-green-400/50 rounded-lg p-4 lg:p-8 font-mono text-left max-w-5xl mx-auto shadow-2xl shadow-green-400/20">
+              <div className="flex items-center mb-4">
+                <div className="flex space-x-2">
+                  <div className="w-3 h-3 lg:w-4 lg:h-4 rounded-full bg-red-500"></div>
+                  <div className="w-3 h-3 lg:w-4 lg:h-4 rounded-full bg-yellow-500"></div>
+                  <div className="w-3 h-3 lg:w-4 lg:h-4 rounded-full bg-green-500"></div>
+                </div>
+                <span className="ml-4 text-muted-foreground text-sm lg:text-base">&gt;_ snakebyte</span>
+              </div>
+              
+              <div className="text-green-400 min-h-[300px] lg:min-h-[530px]">
+                <div className="mb-4">
+                  <span className="text-green-500 text-sm lg:text-base">student@snakebyte:~$</span>
+                  <span className="ml-2 text-sm lg:text-base">./welcome.py</span>
+                </div>
+                
+                <pre className="text-green-400 text-xs sm:text-sm lg:text-base leading-tight whitespace-pre-wrap overflow-x-auto">
+                  {terminalText}
+                  {terminalText.length < asciiArt.length && <span className="animate-pulse">█</span>}
+                </pre>
+                
+                {showOptions && (
+                  <div className="mt-6 space-y-2 animate-fade-in">
+                    {commands.map((command, index) => (
+                      <div 
+                        key={index}
+                        className="flex items-center hover:bg-green-400/10 p-2 rounded cursor-pointer transition-colors"
+                        onClick={() => handleCommandClick(command.cmd)}>
+                        <span className="ml-2 text-sm lg:text-base">&gt;&gt;&gt;</span>
+                        <span className="ml-2 text-cyan-400 text-sm lg:text-base">{command.cmd}</span>
+                        <span className="ml-4 text-gray-400 text-sm lg:text-base">// {command.description}</span>
+                      </div>
+                    ))}
+                    <div className="mt-4 pt-4 border-t border-green-400/30">
+                      <div className="flex items-center">
+                        <span className="text-green-500 text-sm lg:text-base">student@snakebyte:~$</span>
+                        <span className="ml-2 text-sm lg:text-base animate-pulse">█</span>
+                      </div>
+                    </div>
                   </div>
-                  <span className="ml-4 text-muted-foreground"><Terminal/></span>
-                </div>
-                <div className="text-green-400">
-                  <span className="text-green-500">student@snakebyte:~$</span> {terminalText}
-                  <span className="animate-pulse">|</span>
-                </div>
+                )}
               </div>
             </div>
-            
-            <h1 className="text-4xl lg:text-6xl mb-6">
-              Learn <span className="text-green-400">Programming</span>
-              <br />
-              Like a <span className="font-mono text-green-400">Hacker</span>
-            </h1>
-            
-            <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
-              Join thousands of young coders mastering Python, JavaScript, and more through 
+          </div>
+          
+          <div className="text-center mt-8">
+            <p className="text-lg lg:text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
+              Join other coders mastering Python, JavaScript, and more through 
               interactive challenges, real-world projects, and expert guidance.
             </p>
             
@@ -77,9 +145,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
       {/* Features Section */}
-      <section className="py-20 bg-black/20">
+      {/* <section className="py-20 bg-black/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-4xl mb-4">Why Choose SnakeByte?</h2>
@@ -114,10 +181,10 @@ export default function HomePage() {
             </Card>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* CTA Section */}
-      <section className="py-20">
+      {/* <section className="py-20">
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl lg:text-4xl mb-4">Ready to Start Your Coding Journey?</h2>
           <p className="text-xl text-muted-foreground mb-8">
@@ -130,7 +197,7 @@ export default function HomePage() {
             </Button>
           </Link>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 }
