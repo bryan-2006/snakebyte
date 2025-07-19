@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
-import { Terminal, Code2, Zap, Shield, ArrowRight } from 'lucide-react';
+import { Terminal, Zap, Shield, ArrowRight } from 'lucide-react';
 
 export default function HomePage() {
   const [terminalText, setTerminalText] = useState('');
@@ -19,18 +19,18 @@ export default function HomePage() {
 ███████║██║ ╚████║██║  ██║██║  ██╗███████╗
 ╚══════╝╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
                                           
-██████╗ ██╗   ██╗████████╗███████╗        
-██╔══██╗╚██╗ ██╔╝╚══██╔══╝██╔════╝        
-██████╔╝ ╚████╔╝    ██║   █████╗          
-██╔══██╗  ╚██╔╝     ██║   ██╔══╝          
-██████╔╝   ██║      ██║   ███████╗        
-╚═════╝    ╚═╝      ╚═╝   ╚══════╝        
+██████╗ ██x ▔ x██╗████████╗███████╗       
+██╔══██╗╚█▓▃⅄▃▓█╔╝╚══██╔══╝██╔════╝       
+██████╔╝ ╚█▓▒▓█╔╝    ██║   █████╗         
+██╔══██╗  ╚▓▒▓╔╝     ██║   ██╔══╝         
+██████╔╝   ▓▒▓║      ██║   ███████╗       
+╚═════╝    ╚═╝       ╚═╝   ╚══════╝       
 
 Welcome to SnakeByte - Where Code Meets Adventure!`;
 
   const commands = [
-    { cmd: 'login', description: 'Sign in to your account', path: '' },
-    { cmd: 'courses', description: 'View available programming courses', path: '/courses' },
+    { cmd: 'login', description: 'Sign in to see your courses', path: '' },
+    { cmd: 'courses', description: 'Enrolled & available programs', path: '/courses' },
     { cmd: 'about', description: 'Learn more about SnakeByte', path: '' },
     { cmd: 'contact-us', description: 'Reach out to us', path: '' },
   ];
@@ -124,10 +124,10 @@ Welcome to SnakeByte - Where Code Meets Adventure!`;
           
           <div className="text-center mt-8">
             <p className="text-lg lg:text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
-              Join other coders mastering Python, JavaScript, and more through 
-              interactive challenges, real-world projects, and expert guidance.
+              Join other coders mastering programming through 
+              interactive challenges, fun projects, and expert guidance.
             </p>
-            
+{/*             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/courses">
                 <Button size="lg" className="bg-green-600 hover:bg-green-700">
@@ -141,12 +141,12 @@ Welcome to SnakeByte - Where Code Meets Adventure!`;
                   Sign Up Free
                 </Button>
               </Link>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
       {/* Features Section */}
-      {/* <section className="py-20 bg-black/20">
+      <section className="py-20 bg-black/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-4xl mb-4">Why Choose SnakeByte?</h2>
@@ -158,9 +158,9 @@ Welcome to SnakeByte - Where Code Meets Adventure!`;
           <div className="grid md:grid-cols-3 gap-8">
             <Card className="p-6 bg-card/50 border-green-400/20">
               <Terminal className="h-12 w-12 text-green-400 mb-4" />
-              <h3 className="text-xl mb-2">Interactive Terminal</h3>
+              <h3 className="text-xl mb-2">Hands-On Experience</h3>
               <p className="text-muted-foreground">
-                Learn real programming skills with our browser-based terminal and code editor
+                Learn to code by by using real programming langauges used by industry professionals
               </p>
             </Card>
             
@@ -168,7 +168,7 @@ Welcome to SnakeByte - Where Code Meets Adventure!`;
               <Zap className="h-12 w-12 text-green-400 mb-4" />
               <h3 className="text-xl mb-2">Instant Feedback</h3>
               <p className="text-muted-foreground">
-                Get immediate results and hints as you code, making learning faster and more engaging
+                Get immediate feedback and guidance from your personal tutor, making learning faster and more engaging
               </p>
             </Card>
             
@@ -176,15 +176,15 @@ Welcome to SnakeByte - Where Code Meets Adventure!`;
               <Shield className="h-12 w-12 text-green-400 mb-4" />
               <h3 className="text-xl mb-2">Safe Environment</h3>
               <p className="text-muted-foreground">
-                Kid-friendly platform with secure coding environments and parental controls
+                Kid-friendly environment with ability to opt in for regular updates on your child's progress
               </p>
             </Card>
           </div>
         </div>
-      </section> */}
+      </section>
 
       {/* CTA Section */}
-      {/* <section className="py-20">
+      <section className="py-20">
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl lg:text-4xl mb-4">Ready to Start Your Coding Journey?</h2>
           <p className="text-xl text-muted-foreground mb-8">
@@ -197,7 +197,7 @@ Welcome to SnakeByte - Where Code Meets Adventure!`;
             </Button>
           </Link>
         </div>
-      </section> */}
+      </section>
     </div>
   );
 }

@@ -11,4 +11,7 @@ export class Course implements ICourse {
 
   @Field()
   description!: string;
+
+  @Field()
+  logo!: string; 
 }
