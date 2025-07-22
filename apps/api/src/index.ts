@@ -1,19 +1,31 @@
 import 'reflect-metadata';
+import dotenv from 'dotenv';
+dotenv.config();
 import express from 'express';
 import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
 import { buildSchema } from 'type-graphql';
 import { CourseResolver } from './resolvers/CourseResolver';
-import dotenv from 'dotenv';
+import { EnrollmentResolver } from './resolvers/EnrollmentResolver';
+import { AppDataSource } from './config/database';
 import cors from 'cors';
 
-dotenv.config();
+
 
 async function main() {
+    // Initialize database
+  try {
+    await AppDataSource.initialize();
+    console.log('Database connected successfully');
+  } catch (error) {
+    console.error('Database connection failed:', error);
+    process.exit(1);
+  }
+
   const app = express();
 
   const schema = await buildSchema({
-    resolvers: [CourseResolver]
+    resolvers: [CourseResolver, EnrollmentResolver]
   });
 
   const apolloServer = new ApolloServer({
@@ -25,20 +37,27 @@ async function main() {
   app.use(
     '/graphql',
     cors<cors.CorsRequest>(),
-
-    /* explicit instead of the generic CORS configuration
-    cors<cors.CorsRequest>({
-        origin: 'http://localhost:3000',
-        credentials: true,
-    })*/
-
     express.json(),
-    expressMiddleware(apolloServer)
+    expressMiddleware(apolloServer, {
+      context: async ({ req }) => {
+        // Add authentication context here
+        return {
+          user: req.headers.authorization ? await getUserFromToken(req.headers.authorization) : null
+        };
+      },
+    }),
   );
 
-  app.listen(4000, () => {
-    console.log('GraphQL API running at http://localhost:4000/graphql');
+  const port = process.env.PORT || 4000;
+  app.listen(port, () => {
+    console.log(`🚀 Server ready at http://localhost:${port}/graphql`);
   });
+}
+
+// Placeholder for authentication
+async function getUserFromToken(token: string) {
+  // Implement JWT verification here
+  return null;
 }
 
 main().catch(console.error);

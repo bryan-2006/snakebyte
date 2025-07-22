@@ -16,6 +16,7 @@
     "@mikro-orm/core": "^6.4.16",
     "@mikro-orm/postgresql": "^6.4.16",
     "@snakebyte/shared": "file:../../packages/shared",
+    "@types/pg": "^8.15.4",
     "class-validator": "^0.14.2",
     "cors": "^2.8.5",
     "dotenv": "^17.2.0",
@@ -23,7 +24,8 @@
     "graphql": "^16.11.0",
     "pg": "^8.16.3",
     "reflect-metadata": "^0.2.2",
-    "type-graphql": "^2.0.0-rc.2"
+    "type-graphql": "^2.0.0-rc.2",
+    "typeorm": "^0.3.25"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",

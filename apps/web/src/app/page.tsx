@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
-import { Terminal, Zap, Shield, ArrowRight } from 'lucide-react';
+import { SquareTerminal, Terminal, Zap, Shield, ArrowRight } from 'lucide-react';
 
 export default function HomePage() {
   const [terminalText, setTerminalText] = useState('');
@@ -26,12 +26,12 @@ export default function HomePage() {
 ██████╔╝   ▓▒▓║      ██║   ███████╗       
 ╚═════╝    ╚═╝       ╚═╝   ╚══════╝       
 
-Welcome to SnakeByte - Where Code Meets Adventure!`;
+Welcome to SnakeByte! Start your journey as a coder :)`;
 
   const commands = [
     { cmd: 'login', description: 'Sign in to see your courses', path: '' },
     { cmd: 'courses', description: 'Enrolled & available programs', path: '/courses' },
-    { cmd: 'about', description: 'Learn more about SnakeByte', path: '' },
+    { cmd: 'about us', description: 'Learn more and get in contact with us', path: '' },
     { cmd: 'contact-us', description: 'Reach out to us', path: '' },
   ];
 
@@ -84,7 +84,8 @@ Welcome to SnakeByte - Where Code Meets Adventure!`;
                   <div className="w-3 h-3 lg:w-4 lg:h-4 rounded-full bg-yellow-500"></div>
                   <div className="w-3 h-3 lg:w-4 lg:h-4 rounded-full bg-green-500"></div>
                 </div>
-                <span className="ml-4 text-muted-foreground text-sm lg:text-base">&gt;_ snakebyte</span>
+                <span className="ml-4 text-muted-foreground text-sm lg:text-base"><SquareTerminal/>
+                </span>
               </div>
               
               <div className="text-green-400 min-h-[300px] lg:min-h-[530px]">

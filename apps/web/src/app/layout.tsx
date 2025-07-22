@@ -1,5 +1,6 @@
 import '../../styles/global.css';
 import { Providers } from './providers';
+import { StripeProvider } from '../components/StripeProvider';
 import Navbar from '../components/Navbar';
 
 export const metadata = {
@@ -13,11 +14,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body suppressHydrationWarning={true} className='dark'>
+    <html lang="en" className="dark">
+      <body suppressHydrationWarning={true} className="dark">
         <Providers>
-          <Navbar />
-          {children}
+          <StripeProvider>
+            <Navbar />
+            {children}
+          </StripeProvider>
         </Providers>
       </body>
     </html>
