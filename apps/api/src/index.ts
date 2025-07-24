@@ -7,6 +7,7 @@ import { expressMiddleware } from '@apollo/server/express4';
 import { buildSchema } from 'type-graphql';
 import { CourseResolver } from './resolvers/CourseResolver';
 import { EnrollmentResolver } from './resolvers/EnrollmentResolver';
+import { PaymentResolver } from './resolvers/PaymentResolver';
 import { AppDataSource } from './config/database';
 import { stripeWebhook } from './routes/stripe-webhook';
 import bodyParser from 'body-parser';
@@ -28,7 +29,7 @@ async function main() {
   app.post('/webhook/stripe', bodyParser.raw({ type: 'application/json' }), stripeWebhook);
 
   const schema = await buildSchema({
-    resolvers: [CourseResolver, EnrollmentResolver]
+    resolvers: [CourseResolver, EnrollmentResolver, PaymentResolver]
   });
 
   const apolloServer = new ApolloServer({

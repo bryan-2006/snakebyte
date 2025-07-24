@@ -7,16 +7,21 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 
 @Resolver()
 export class PaymentResolver {
-  @Mutation(() => String) // Returns client secret
+  @Mutation(() => String)
   async createPaymentIntent(
     @Arg('amount', () => Float) amount: number,
     @Arg('courseId', () => Int) courseId: number,
-    @Arg('userId', () => Int) userId: number
+    @Arg('userEmail') userEmail: string
   ): Promise<string> {
+    console.log('Creating payment intent:', { amount, courseId, userEmail });
+    
     const paymentIntent = await stripe.paymentIntents.create({
       amount: Math.round(amount * 100),
-      currency: 'cad',
-      metadata: { courseId: courseId.toString(), userId: userId.toString() },
+      currency: 'usd',
+      metadata: {
+        courseId: courseId.toString(),
+        userEmail: userEmail,
+      },
     });
 
     return paymentIntent.client_secret!;

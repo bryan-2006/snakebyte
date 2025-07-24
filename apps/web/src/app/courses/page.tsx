@@ -1,8 +1,8 @@
 'use client';
 
-import { gql, useQuery } from 'urql';
+import { gql, useQuery, useMutation} from 'urql';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation'; // not next/router)
+import { useRouter } from 'next/navigation'; // not next/router
 import { Course } from '@snakebyte/shared';
 import { Button } from '../../components/ui/button';
 import { Card } from '../../components/ui/card';
@@ -26,42 +26,47 @@ const iconMap = {
   'Globe': Globe,
 } as const;
 
+const CreatePaymentIntentMutation = gql`
+  mutation CreatePaymentIntent($amount: Float!, $courseId: Int!, $userEmail: String!) {
+    createPaymentIntent(amount: $amount, courseId: $courseId, userEmail: $userEmail)
+  }
+`;
+
 export default function CoursesPage() {
+
   const [{ data, fetching, error }] = useQuery({ query: CoursesQuery });
   const { data: session } = useSession();
   const router = useRouter();
+  const [, createPaymentIntent] = useMutation(CreatePaymentIntentMutation);
 
-const handleEnroll = async (courseId: number, price: number) => {
-    if (!session) {
+
+  const handleEnroll = async (courseId: number, price: number) => {
+    if (!session?.user?.email) {
       alert('Please log in to enroll');
       return;
     }
 
     try {
       // Get client secret from your API
-      const response = await fetch('/api/create-payment-intent', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          amount: price,
-          courseId,
-          userId: session.user?.email // optional chaining?
-        })
+      const result = await createPaymentIntent({
+        amount: price,
+        courseId,
+        userEmail: session.user.email
       });
 
-      const { clientSecret } = await response.json();
+      if (result.error) {
+        console.error('Payment setup failed:', result.error);
+        return;
+      }
+
+      const clientSecret = result.data?.createPaymentIntent;
 
       // Redirect to checkout page with client secret
       router.push(`/checkout?clientSecret=${clientSecret}&courseId=${courseId}`);
+      // router.push(`/`);
     } catch (error) {
       console.error('Payment setup failed:', error);
     }
-  };
-
-  const processPayment = async (courseId: number, price: number): Promise<boolean> => {
-    // Integrate with Stripe, PayPal, etc.
-    // This is a placeholder
-    return confirm(`Pay $${price} for this course?`);
   };
 
   return (
@@ -85,7 +90,7 @@ const handleEnroll = async (courseId: number, price: number) => {
                   </p>
                   <div className="flex justify-between items-center">
                     <span className="text-2xl font-bold text-green-400">
-                      {course.price}
+                      {course.price} CAD
                     </span>
                     <Button 
                       onClick={() => handleEnroll(course.id, course.price)}
