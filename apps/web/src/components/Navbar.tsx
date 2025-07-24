@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import { Button } from './ui/button';
-import { Terminal, Code, LogOut } from 'lucide-react';
+import { LogIn, LogOut } from 'lucide-react';
 
 export default function Navbar() {
   const { data: session, status } = useSession();
@@ -49,8 +49,8 @@ export default function Navbar() {
               </div>
             ) : (
               <Button onClick={() => signIn('google')} className="bg-green-600 hover:bg-green-700">
-                <Code className="h-4 w-4 mr-2" />
-                Sign In
+                <LogIn className="h-4 w-4" />
+                Log In
               </Button>
             )}
           </div>
