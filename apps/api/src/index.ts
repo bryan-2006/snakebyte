@@ -44,10 +44,11 @@ async function main() {
     express.json(),
     expressMiddleware(apolloServer, {
       context: async ({ req }) => {
-        // Add authentication context here
-        return {
-          user: req.headers.authorization ? await getUserFromToken(req.headers.authorization) : null
-        };
+      // Future: You could validate sessions here if needed for Simple GraphQL Context (Future-proofing)
+      return {
+        // For now, just pass through any headers
+        headers: req.headers
+      };
       },
     }),
   );
@@ -58,10 +59,10 @@ async function main() {
   });
 }
 
-// Placeholder for authentication
-async function getUserFromToken(token: string) {
-  // Implement JWT verification here
-  return null;
-}
+// // Placeholder for authentication
+// async function getUserFromToken(token: string) {
+//   // Implement JWT verification here
+//   return null;
+// }
 
 main().catch(console.error);
