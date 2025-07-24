@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import Stripe from 'stripe';
+import { EnrollmentResolver } from '../resolvers/EnrollmentResolver';
 import { AppDataSource } from '../config/database';
 import { Enrollment, PaymentStatus } from '../types/Enrollment';
 import { User } from '../types/User';
@@ -10,52 +11,64 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 });
 
 export const stripeWebhook = async (req: Request, res: Response) => {
-  const sig = req.headers['stripe-signature'];
-  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
+  const sig = req.headers['stripe-signature'] as string;
 
-  let event: Stripe.Event;
+  let event;
+  try {
+    event = stripe.webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET!);
+  } catch (err) {
+    console.log('Webhook signature verification failed.', err);
+    return res.status(400).send(`Webhook Error: ${err}`);
+  }
+
+  console.log('Received event:', event.type);
 
   try {
-    event = stripe.webhooks.constructEvent(req.body, sig!, webhookSecret);
-  } catch (err) {
-    console.error('⚠️ Webhook signature verification failed.', err);
-    return res.status(400).send(`Webhook Error: ${(err as Error).message}`);
-  }
+    // Handle the event
+    switch (event.type) {
+      case 'payment_intent.succeeded':
+        const paymentIntent = event.data.object;
+        console.log('PaymentIntent succeeded:', paymentIntent.id);
+        console.log('Metadata:', paymentIntent.metadata);
 
-  // Handle successful payment
-  if (event.type === 'payment_intent.succeeded') {
-    const paymentIntent = event.data.object as Stripe.PaymentIntent;
+        const { courseId, userEmail } = paymentIntent.metadata;
 
-    const courseId = Number(paymentIntent.metadata.courseId);
-    const userId = Number(paymentIntent.metadata.userId);
-    const paymentId = paymentIntent.id;
+        if (!courseId || !userEmail) {
+          console.error('Missing metadata:', { courseId, userEmail });
+          break;
+        }
 
-    try {
-      const enrollmentRepo = AppDataSource.getRepository(Enrollment);
-      const userRepo = AppDataSource.getRepository(User);
-      const courseRepo = AppDataSource.getRepository(Course);
+        console.log('Attempting to create enrollment for:', { userEmail, courseId });
 
-      const user = await userRepo.findOneByOrFail({ id: userId });
-      const course = await courseRepo.findOneByOrFail({ id: courseId });
-
-      const newEnrollment = enrollmentRepo.create({
-        user,
-        course,
-        userId,
-        courseId,
-        paymentStatus: PaymentStatus.COMPLETED,
-        paymentId,
-      });
-
-      await enrollmentRepo.save(newEnrollment);
-
-      console.log('✅ Enrollment saved:', newEnrollment);
-      return res.json({ received: true });
-    } catch (err) {
-      console.error('❌ Failed to save enrollment:', err);
-      return res.status(500).json({ error: 'Failed to save enrollment' });
+        try {
+          const enrollmentResolver = new EnrollmentResolver();
+          const enrollment = await enrollmentResolver.enrollUserByEmail(
+            userEmail,
+            parseInt(courseId),
+            paymentIntent.id
+          );
+          console.log('✅ Enrollment created successfully:', enrollment);
+        } catch (error) {
+          console.error('❌ Error creating enrollment:', error);
+          if (error instanceof Error) {
+            console.error('Error details:', error.message);
+            console.error('Stack trace:', error.stack);
+          } else {
+            console.error('Error details:', error);
+          }
+        }
+        break;
+        
+      case 'payment_intent.payment_failed':
+        console.log('Payment failed:', event.data.object.id);
+        break;
+        
+      default:
+        console.log(`Unhandled event type ${event.type}`);
     }
+  } catch (error) {
+    console.error('Webhook processing error:', error);
   }
 
-  res.json({ received: true });
+  res.json({received: true});
 };
