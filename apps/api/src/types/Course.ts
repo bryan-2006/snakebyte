@@ -1,5 +1,6 @@
 import { ObjectType, Field, Int, Float } from 'type-graphql';
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany} from 'typeorm';
+import { Enrollment } from './Enrollment';
 import { Course as ICourse } from '@snakebyte/shared';
 
 @Entity()
@@ -24,4 +25,7 @@ export class Course implements ICourse {
   @Column('decimal', { precision: 10, scale: 2 })
   @Field(() => Float)
   price!: number;
+
+  @OneToMany(() => Enrollment, enrollment => enrollment.course)
+  enrollments!: Enrollment[];
 }

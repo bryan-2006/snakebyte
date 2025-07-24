@@ -1,5 +1,5 @@
 import { ObjectType, Field, Int } from 'type-graphql';
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { Enrollment } from './Enrollment';
 
 @Entity()
@@ -16,14 +16,6 @@ export class User {
   @Column()
   @Field()
   name!: string;
-
-  @Column({ unique: true })
-  @Field()
-  googleId!: string;
-
-  @CreateDateColumn()
-  @Field()
-  createdAt!: Date;
 
   @OneToMany(() => Enrollment, enrollment => enrollment.user)
   @Field(() => [Enrollment])

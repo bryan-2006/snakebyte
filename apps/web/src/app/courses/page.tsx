@@ -2,6 +2,7 @@
 
 import { gql, useQuery } from 'urql';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation'; // not next/router)
 import { Course } from '@snakebyte/shared';
 import { Button } from '../../components/ui/button';
 import { Card } from '../../components/ui/card';
@@ -28,20 +29,32 @@ const iconMap = {
 export default function CoursesPage() {
   const [{ data, fetching, error }] = useQuery({ query: CoursesQuery });
   const { data: session } = useSession();
+  const router = useRouter();
 
-  const handleEnroll = async (courseId: number, price: number) => {
+const handleEnroll = async (courseId: number, price: number) => {
     if (!session) {
       alert('Please log in to enroll');
       return;
     }
 
-    // Integrate with Stripe or your payment processor
-    // For now, just a placeholder
-    const paymentSuccess = await processPayment(courseId, price);
-    
-    if (paymentSuccess) {
-      // Call enrollment mutation
-      console.log(`Enrolled in course ${courseId}`);
+    try {
+      // Get client secret from your API
+      const response = await fetch('/api/create-payment-intent', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount: price,
+          courseId,
+          userId: session.user?.email // optional chaining?
+        })
+      });
+
+      const { clientSecret } = await response.json();
+
+      // Redirect to checkout page with client secret
+      router.push(`/checkout?clientSecret=${clientSecret}&courseId=${courseId}`);
+    } catch (error) {
+      console.error('Payment setup failed:', error);
     }
   };
 
