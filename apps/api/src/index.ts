@@ -13,26 +13,52 @@ import { stripeWebhook } from './routes/stripe-webhook';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import rateLimit from 'express-rate-limit';
+import helmet from 'helmet';
+import compression from 'compression';
 import { getUserFromSession } from './utils/auth';
 import { GraphQLContext } from './types/Context';
+import { ensureAdminUsers } from './utils/adminSetup';
 
 async function main() {
-    // Initialize database
+  // Initialize database
   try {
     await AppDataSource.initialize();
     console.log('Database connected successfully');
+    
+    // Ensure admin users exist
+    await ensureAdminUsers();
   } catch (error) {
     console.error('Database connection failed:', error);
     process.exit(1);
   }
 
+  const app = express();
+  
+  // Production security middleware
+  if (process.env.NODE_ENV === 'production') {
+    app.use(helmet({
+      contentSecurityPolicy: false, // GraphQL needs this disabled
+    }));
+    app.use(compression());
+  }
+
+  // Stricter rate limiting for production
   const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100, // Limit each IP to 100 requests per windowMs
-    message: 'Too many requests from this IP, please try again later.'
+    windowMs: 15 * 60 * 1000,
+    max: process.env.NODE_ENV === 'production' ? 50 : 100,
+    message: 'Too many requests from this IP, please try again later.',
+    standardHeaders: true,
+    legacyHeaders: false,
   });
 
-  const app = express();
+  // CORS configuration for production
+  const corsOptions = {
+    origin: process.env.NODE_ENV === 'production' 
+      ? ['https://your-domain.com', 'https://www.your-domain.com'] // Your actual domains
+      : ['http://localhost:3000'],
+    credentials: true,
+  };
+
   app.post('/webhook/stripe', bodyParser.raw({ type: 'application/json' }), stripeWebhook);
 
   const schema = await buildSchema({
@@ -41,6 +67,8 @@ async function main() {
 
   const apolloServer = new ApolloServer<GraphQLContext>({
     schema,
+    introspection: process.env.NODE_ENV !== 'production', // Disable in production
+    plugins: process.env.NODE_ENV === 'production' ? [] : undefined,
   });
 
   await apolloServer.start();
@@ -48,11 +76,11 @@ async function main() {
   app.use(
     '/graphql', 
     limiter,
-    cors<cors.CorsRequest>(),
-    express.json(),
+    cors(corsOptions),
+    express.json({ limit: '10mb' }),
     expressMiddleware(apolloServer, {
       context: async ({ req }): Promise<GraphQLContext> => {
-        const user = await getUserFromSession(req.headers.authorization);
+        const user = await getUserFromSession(req.headers.authorization as string);
         return {
           user,
           headers: req.headers
