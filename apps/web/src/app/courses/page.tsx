@@ -96,9 +96,9 @@ export default function CoursesPage() {
   };
 
   // Get enrolled course IDs for quick lookup
-  const enrolledCourseIds = new Set(
-    enrollmentData?.getUserEnrollmentsByEmail?.map((enrollment: any) => enrollment.courseId) || []
-  );
+const enrolledCourseIds = new Set(
+  enrollmentData?.getUserEnrollmentsByEmail?.map((enrollment: { courseId: number }) => enrollment.courseId) || []
+);
 
   // Filter courses into enrolled and available
   const allCourses = data?.courses || [];
@@ -186,7 +186,7 @@ export default function CoursesPage() {
               ) : (
                 <div className="col-span-2 text-center py-8">
                   <p className="text-xl text-muted-foreground">
-                    You're enrolled in all available courses!
+                    You&apos;re enrolled in all available courses!
                   </p>
                 </div>
               )

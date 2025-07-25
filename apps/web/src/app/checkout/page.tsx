@@ -1,16 +1,15 @@
 'use client';
 
+import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import CheckoutForm from '../../components/CheckoutForm';
 
 const stripeKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
-
-// Only load Stripe if key exists
 const stripePromise = stripeKey ? loadStripe(stripeKey) : null;
 
-export default function CheckoutPage() {
+function CheckoutContent() {
   const searchParams = useSearchParams();
   const clientSecret = searchParams.get('clientSecret');
   const courseId = searchParams.get('courseId');
@@ -49,5 +48,20 @@ export default function CheckoutPage() {
         <CheckoutForm clientSecret={clientSecret} courseId={courseId} />
       </Elements>
     </div>
+  );
+}
+
+export default function CheckoutPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl mb-4">Loading checkout...</h1>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-400 mx-auto"></div>
+        </div>
+      </div>
+    }>
+      <CheckoutContent />
+    </Suspense>
   );
 }

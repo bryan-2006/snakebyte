@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo} from 'react';
 import { useRouter } from 'next/navigation'; 
 import { signIn } from 'next-auth/react';
 import { Button } from '../components/ui/button';
@@ -12,21 +12,21 @@ export default function HomePage() {
   const [terminalText, setTerminalText] = useState('');
   const [showOptions, setShowOptions] = useState(false);
   const router = useRouter();
-  const asciiArt = `███████╗███╗   ██╗ █████╗ ██╗  ██╗███████╗
+  const asciiArt = useMemo(() => `███████╗███╗   ██╗ █████╗ ██╗  ██╗███████╗
 ██╔════╝████╗  ██║██╔══██╗██║ ██╔╝██╔════╝
 ███████╗██╔██╗ ██║███████║█████╔╝ █████╗  
 ╚════██║██║╚██╗██║██╔══██║██╔═██╗ ██╔══╝  
 ███████║██║ ╚████║██║  ██║██║  ██╗███████╗
 ╚══════╝╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
                                           
-██████╗ ██x ▔ x██╗████████╗███████╗       
-██╔══██╗╚█▓▃⅄▃▓█╔╝╚══██╔══╝██╔════╝       
+██████╗ ██╗   ██╗████████╗███████╗       
+██╔══██╗╚██x▔x██╔╝╚══██╔══╝██╔════╝       
 ██████╔╝ ╚█▓▒▓█╔╝    ██║   █████╗         
 ██╔══██╗  ╚▓▒▓╔╝     ██║   ██╔══╝         
 ██████╔╝   ▓▒▓║      ██║   ███████╗       
 ╚═════╝    ╚═╝       ╚═╝   ╚══════╝       
 
-Welcome to SnakeByte! Start your journey as a coder :)`;
+Welcome to SnakeByte! Start your journey as a coder :)`, []);
 
   const commands = [
     { cmd: 'login', description: 'Sign in to see your courses', path: '' },
@@ -48,7 +48,7 @@ Welcome to SnakeByte! Start your journey as a coder :)`;
     }, 5);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [asciiArt]); 
 
     const handleCommandClick = (cmd: string) => {
     switch (cmd) {
@@ -108,7 +108,7 @@ Welcome to SnakeByte! Start your journey as a coder :)`;
                         onClick={() => handleCommandClick(command.cmd)}>
                         <span className="ml-2 text-sm lg:text-base">&gt;&gt;&gt;</span>
                         <span className="ml-2 text-cyan-400 text-sm lg:text-base">{command.cmd}</span>
-                        <span className="ml-4 text-gray-400 text-sm lg:text-base">// {command.description}</span>
+                        <span className="ml-4 text-gray-400 text-sm lg:text-base">&sol;&sol; {command.description}</span>
                       </div>
                     ))}
                     <div className="mt-4 pt-4 border-t border-green-400/30">
@@ -128,21 +128,6 @@ Welcome to SnakeByte! Start your journey as a coder :)`;
               Join other coders mastering programming through 
               interactive challenges, fun projects, and expert guidance.
             </p>
-{/*             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/courses">
-                <Button size="lg" className="bg-green-600 hover:bg-green-700">
-                  <Code2 className="mr-2 h-5 w-5" />
-                  Start Coding
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </Link>
-              <Link href="/login">
-                <Button size="lg" variant="outline">
-                  Sign Up Free
-                </Button>
-              </Link>
-            </div> */}
           </div>
         </div>
       </section>
@@ -177,7 +162,7 @@ Welcome to SnakeByte! Start your journey as a coder :)`;
               <Shield className="h-12 w-12 text-green-400 mb-4" />
               <h3 className="text-xl mb-2">Safe Environment</h3>
               <p className="text-muted-foreground">
-                Kid-friendly environment with ability to opt in for regular updates on your child's progress
+                Kid-friendly environment with ability to opt in for regular updates on your child&apos;s progress
               </p>
             </Card>
           </div>
