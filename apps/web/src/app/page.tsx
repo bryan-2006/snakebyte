@@ -19,8 +19,8 @@ export default function HomePage() {
 ███████║██║ ╚████║██║  ██║██║  ██╗███████╗
 ╚══════╝╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
                                           
-██████╗ ██╗   ██╗████████╗███████╗       
-██╔══██╗╚██x▔x██╔╝╚══██╔══╝██╔════╝       
+██████╗ ██x ▔ x██╗████████╗███████╗       
+██╔══██╗╚█▓▃⅄▃▓█╔╝╚══██╔══╝██╔════╝       
 ██████╔╝ ╚█▓▒▓█╔╝    ██║   █████╗         
 ██╔══██╗  ╚▓▒▓╔╝     ██║   ██╔══╝         
 ██████╔╝   ▓▒▓║      ██║   ███████╗       
@@ -108,7 +108,7 @@ Welcome to SnakeByte! Start your journey as a coder :)`, []);
                         onClick={() => handleCommandClick(command.cmd)}>
                         <span className="ml-2 text-sm lg:text-base">&gt;&gt;&gt;</span>
                         <span className="ml-2 text-cyan-400 text-sm lg:text-base">{command.cmd}</span>
-                        <span className="ml-4 text-gray-400 text-sm lg:text-base">&sol;&sol; {command.description}</span>
+                        <span className="ml-4 text-gray-400 text-sm lg:text-base">{'// '} {command.description}</span>
                       </div>
                     ))}
                     <div className="mt-4 pt-4 border-t border-green-400/30">
