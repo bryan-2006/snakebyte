@@ -139,7 +139,7 @@ export default function CoursesPage() {
               {session ? 'Enroll' : (
                 <>
                   <Lock className="h-4 w-4 mr-2" />
-                  Login to Enroll
+                  Enroll
                 </>
               )}
             </Button>

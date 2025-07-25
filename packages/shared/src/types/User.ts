@@ -2,6 +2,7 @@ export interface User {
   id: number;
   email: string;
   name: string;
-  googleId: string;
-  createdAt: Date;
+  isAdmin: boolean;
+  googleId?: string;
+  createdAt?: Date;
 }

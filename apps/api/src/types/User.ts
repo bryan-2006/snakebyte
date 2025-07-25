@@ -17,6 +17,10 @@ export class User {
   @Field()
   name!: string;
 
+  @Field()
+  @Column({ default: false })
+  isAdmin!: boolean;
+
   @OneToMany(() => Enrollment, enrollment => enrollment.user)
   @Field(() => [Enrollment])
   enrollments!: Enrollment[];

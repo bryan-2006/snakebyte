@@ -12,8 +12,9 @@ import { AppDataSource } from './config/database';
 import { stripeWebhook } from './routes/stripe-webhook';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-
-
+import rateLimit from 'express-rate-limit';
+import { getUserFromSession } from './utils/auth';
+import { GraphQLContext } from './types/Context';
 
 async function main() {
     // Initialize database
@@ -25,6 +26,12 @@ async function main() {
     process.exit(1);
   }
 
+  const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // Limit each IP to 100 requests per windowMs
+    message: 'Too many requests from this IP, please try again later.'
+  });
+
   const app = express();
   app.post('/webhook/stripe', bodyParser.raw({ type: 'application/json' }), stripeWebhook);
 
@@ -32,23 +39,24 @@ async function main() {
     resolvers: [CourseResolver, EnrollmentResolver, PaymentResolver]
   });
 
-  const apolloServer = new ApolloServer({
+  const apolloServer = new ApolloServer<GraphQLContext>({
     schema,
   });
 
   await apolloServer.start();
 
   app.use(
-    '/graphql',
+    '/graphql', 
+    limiter,
     cors<cors.CorsRequest>(),
     express.json(),
     expressMiddleware(apolloServer, {
-      context: async ({ req }) => {
-      // Future: You could validate sessions here if needed for Simple GraphQL Context (Future-proofing)
-      return {
-        // For now, just pass through any headers
-        headers: req.headers
-      };
+      context: async ({ req }): Promise<GraphQLContext> => {
+        const user = await getUserFromSession(req.headers.authorization);
+        return {
+          user,
+          headers: req.headers
+        };
       },
     }),
   );
@@ -58,11 +66,5 @@ async function main() {
     console.log(`🚀 Server ready at http://localhost:${port}/graphql`);
   });
 }
-
-// // Placeholder for authentication
-// async function getUserFromToken(token: string) {
-//   // Implement JWT verification here
-//   return null;
-// }
 
 main().catch(console.error);

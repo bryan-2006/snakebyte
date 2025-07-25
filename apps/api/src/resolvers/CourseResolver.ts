@@ -1,6 +1,8 @@
-import { Query, Resolver, Mutation, Arg, Float } from 'type-graphql';
+import { Query, Resolver, Mutation, Arg, Float, UseMiddleware, Ctx} from 'type-graphql';
+import { AuthMiddleware } from '../middleware/auth';
 import { Course } from '../types/Course';
 import { AppDataSource } from '../config/database';
+import { GraphQLContext } from '../types/Context';
 
 @Resolver()
 export class CourseResolver {
@@ -18,11 +20,13 @@ export class CourseResolver {
   }
 
   @Mutation(() => Course)
+  @UseMiddleware(AuthMiddleware)
   async createCourse(
     @Arg('title') title: string,
     @Arg('description') description: string,
     @Arg('logo') logo: string,
-    @Arg('price', () => Float) price: number
+    @Arg('price', () => Float) price: number,
+    @Ctx() context: GraphQLContext // Update this type
   ): Promise<Course> {
     const courseRepo = AppDataSource.getRepository(Course);
     
@@ -33,6 +37,12 @@ export class CourseResolver {
     course.price = price;
     
     return await courseRepo.save(course);
+  }
+
+  @Mutation(() => [Course])
+  @UseMiddleware(AuthMiddleware)
+  async seedCoursesManually(@Ctx() context: GraphQLContext): Promise<Course[]> {
+    return await this.seedCourses();
   }
 
   // Helper method to seed initial courses

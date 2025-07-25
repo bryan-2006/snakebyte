@@ -18,17 +18,23 @@
     "@snakebyte/shared": "file:../../packages/shared",
     "@types/pg": "^8.15.4",
     "class-validator": "^0.14.2",
+    "compression": "^1.8.1",
     "cors": "^2.8.5",
     "dotenv": "^17.2.0",
     "express": "^4.21.2",
+    "express-rate-limit": "^8.0.1",
     "graphql": "^16.11.0",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
     "pg": "^8.16.3",
     "reflect-metadata": "^0.2.2",
     "type-graphql": "^2.0.0-rc.2",
     "typeorm": "^0.3.25"
   },
   "devDependencies": {
+    "@types/compression": "^1.8.1",
     "@types/cors": "^2.8.12",
+    "@types/jsonwebtoken": "^9.0.10",
     "ts-node-dev": "^2.0.0"
   }
 }
