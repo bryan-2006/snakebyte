@@ -3,7 +3,8 @@
 import { gql, useQuery, useMutation} from 'urql';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { Course } from '@snakebyte/shared';
+// import { Course } from '@snakebyte/shared';
+import { Course } from '../../types'; 
 import { Button } from '../../components/ui/button';
 import { Card } from '../../components/ui/card';
 import toast from 'react-hot-toast';

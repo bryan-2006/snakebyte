@@ -1,4 +1,4 @@
-import { Course } from '@snakebyte/shared';
+import { Course } from '../types';
 
 interface Props {
   course: Course;
