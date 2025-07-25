@@ -1,13 +1,15 @@
 # Ignore node_modules
 node_modules/
 
-# Ignore build outputs
+# Build outputs
 dist/
 .next/
 out/
+build/
 
 # Ignore logs
 *.log
+npm-debug.log*
 
 # Ignore dotenv files
 .env*
@@ -19,3 +21,13 @@ out/
 
 # Turborepo
 .turbo/
+
+# Runtime data
+pids/
+*.pid
+*.seed
+
+# IDE
+.vscode/
+.idea/
+.DS_Store
