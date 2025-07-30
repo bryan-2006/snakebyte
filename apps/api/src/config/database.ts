@@ -13,9 +13,10 @@ export const AppDataSource = new DataSource({
   database: config.database.name,
   synchronize: process.env.NODE_ENV !== 'production', // ⚠️ CRITICAL: False in production
   logging: process.env.NODE_ENV !== 'production',
-  ssl: process.env.NODE_ENV === 'production' ? { 
-    rejectUnauthorized: false 
-  } : false,
+  // ssl: process.env.NODE_ENV === 'production' ? { 
+  //   rejectUnauthorized: false 
+  // } : false,
+  ssl: false, // Disable SSL for local testing
   entities: [User, Course, Enrollment],
   migrations: process.env.NODE_ENV === 'production' ? ['dist/migrations/*.js'] : [],
 });

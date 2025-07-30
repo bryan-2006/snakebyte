@@ -52,11 +52,16 @@ async function main() {
   });
 
   // CORS configuration for production
+  // const corsOptions = {
+  //   origin: process.env.NODE_ENV === 'production' 
+  //     ? ['https://your-domain.com', 'https://www.your-domain.com'] // Your actual domains
+  //     : ['http://localhost:3000'],
+  //   credentials: true,
+  // };
+
   const corsOptions = {
-    origin: process.env.NODE_ENV === 'production' 
-      ? ['https://your-domain.com', 'https://www.your-domain.com'] // Your actual domains
-      : ['http://localhost:3000'],
-    credentials: true,
+  origin: ['http://localhost:3000'],
+  credentials: true,
   };
 
   app.post('/webhook/stripe', bodyParser.raw({ type: 'application/json' }), stripeWebhook);
