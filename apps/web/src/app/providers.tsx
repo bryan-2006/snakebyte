@@ -1,20 +1,19 @@
-'use client'
-import { Provider as UrqlProvider } from 'urql'
-import { SessionProvider } from 'next-auth/react'
-import { urqlClient } from '../lib/urqlClient'
+'use client';
 
-export function Providers({ 
-  children,
-  session 
-}: { 
-  children: React.ReactNode
-  session?: any
-}) {
+import { SessionProvider } from 'next-auth/react';
+import { Provider as UrqlProvider } from 'urql';
+import { urqlClient } from '../lib/urqlClient';
+
+interface ProvidersProps {
+  children: React.ReactNode;
+}
+
+export function Providers({ children }: ProvidersProps) {
   return (
-    <SessionProvider session={session}>
+    <SessionProvider>
       <UrqlProvider value={urqlClient}>
         {children}
       </UrqlProvider>
     </SessionProvider>
-  )
+  );
 }

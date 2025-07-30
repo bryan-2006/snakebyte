@@ -11,7 +11,11 @@ export const AppDataSource = new DataSource({
   username: config.database.username,
   password: config.database.password,
   database: config.database.name,
-  synchronize: true,
-  logging: true,
+  synchronize: process.env.NODE_ENV !== 'production', // ⚠️ CRITICAL: False in production
+  logging: process.env.NODE_ENV !== 'production',
+  ssl: process.env.NODE_ENV === 'production' ? { 
+    rejectUnauthorized: false 
+  } : false,
   entities: [User, Course, Enrollment],
+  migrations: process.env.NODE_ENV === 'production' ? ['dist/migrations/*.js'] : [],
 });
