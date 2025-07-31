@@ -33,14 +33,6 @@ async function main() {
   }
 
   const app = express();
-  
-  // Production security middleware
-  if (process.env.NODE_ENV === 'production') {
-    app.use(helmet({
-      contentSecurityPolicy: false, // GraphQL needs this disabled
-    }));
-    app.use(compression());
-  }
 
   // Stricter rate limiting for production
   const limiter = rateLimit({
@@ -60,9 +52,19 @@ async function main() {
   // };
 
   const corsOptions = {
-  origin: ['http://localhost:3000'],
-  credentials: true,
+    origin: ['http://localhost:3000'],
+    credentials: true,
   };
+
+  // Production security middleware
+  // if (process.env.NODE_ENV === 'production') {
+  //   app.use(helmet({
+  //     contentSecurityPolicy: false, // GraphQL needs this disabled
+  //   }));
+  //   app.use(compression());
+  // }
+
+  app.use(cors(corsOptions));
 
   app.post('/webhook/stripe', bodyParser.raw({ type: 'application/json' }), stripeWebhook);
 

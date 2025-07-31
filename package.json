@@ -18,5 +18,9 @@
   "dependencies": {
     "@snakebyte/shared": "^0.1.0",
     "typeorm": "^0.3.25"
-  }
+  },
+  "files": [
+  "dist",
+  "certs"
+]
 }
