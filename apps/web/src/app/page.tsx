@@ -60,6 +60,7 @@ export default function HomePage() {
         router.push('/courses');
         break;
       case 'about us':
+        router.push('/about');
         break;
       case 'contact-us':
         router.push('/contact');
@@ -203,7 +204,7 @@ export default function HomePage() {
         </section>
 
         {/* Features Section */}
-        <section className="py-20 bg-black/20">
+        <section className="py-10 bg-black/20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl lg:text-4xl mb-4">Why Choose SnakeByte?</h2>
@@ -264,7 +265,7 @@ export default function HomePage() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-20">
+        <section className="py-10">
           <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl lg:text-4xl mb-7">Ready to Start Your Coding Journey?</h2>
             <p className="text-xl text-muted-foreground mb-8">
