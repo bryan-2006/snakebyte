@@ -47,7 +47,7 @@ export default function ContactPage() {
           Contact Us
         </h1>
         <p className="mb-6 text-muted-foreground">
-          Have a question or want to get in touch? Fill out the form below and we'll get back to you!
+          Have a question or want to get in touch? Fill out the form below and we&apos;ll get back to you!
         </p>
         <form onSubmit={handleSubmit} className="space-y-10">
           <div>
@@ -111,7 +111,7 @@ export default function ContactPage() {
         </form>
         {status === "success" && (
           <div className="flex items-center gap-2 mt-4 text-green-600">
-            <CheckCircle2 className="h-5 w-5" /> Message sent! We'll get back to you soon.
+            <CheckCircle2 className="h-5 w-5" /> Message sent! We&apos;ll get back to you soon.
           </div>
         )}
         {status === "error" && (

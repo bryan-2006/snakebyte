@@ -99,7 +99,7 @@ export default function AboutPage() {
                 Email: <a href="mailto:snakebyte.service@gmail.com" className="text-green-400 hover:underline">snakebyte.service@gmail.com</a>
               </p>
               <p className="text-xl text-muted-foreground mb-4 max-w-3xl ml-8 mr-6">
-                Or fill out our contact form (provide a phone number if you'd like a call back):
+                Or fill out our contact form (provide a phone number if you&apos;d like a call back):
               </p>
               <Link href="/contact" className="ml-8">
                 <Button
