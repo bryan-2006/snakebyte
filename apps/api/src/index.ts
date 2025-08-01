@@ -52,7 +52,7 @@ async function main() {
   // };
 
   const corsOptions = {
-    origin: ['http://localhost:3000'],
+    origin: ['http://localhost:3000', 'http://localhost:3001'], // Update with your actual domains
     credentials: true,
   };
 

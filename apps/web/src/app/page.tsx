@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
-import { SquareTerminal, Terminal, Zap, Shield, ArrowRight } from 'lucide-react';
+import { SquareTerminal, Terminal, Zap, Shield, ArrowRight, BookOpenText, Mail } from 'lucide-react';
 
 export default function HomePage() {
   const [showOptions, setShowOptions] = useState(false);
@@ -62,6 +62,7 @@ export default function HomePage() {
       case 'about us':
         break;
       case 'contact-us':
+        router.push('/contact');
         break;
       default:
         break;
@@ -206,12 +207,9 @@ export default function HomePage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl lg:text-4xl mb-4">Why Choose SnakeByte?</h2>
-              <p className="text-xl text-muted-foreground">
-                We make programming accessible, engaging, and fun for young minds
-              </p>
             </div>
             
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-3 gap-8 mb-12">
               <Card className="p-6 bg-card/50 border-green-400/20">
                 <Terminal className="h-12 w-12 text-green-400 mb-4" />
                 <h3 className="text-xl mb-2">Hands-On Experience</h3>
@@ -236,13 +234,39 @@ export default function HomePage() {
                 </p>
               </Card>
             </div>
+            
+            <div className="text-center mb-16 flex flex-col items-center gap-6">
+  <p className="text-xl text-muted-foreground mb-4 max-w-2xl">
+    We make programming accessible, engaging, and fun for young minds
+  </p>
+<div className="flex flex-wrap justify-center gap-4">
+  <Link href="/about">
+    <Button
+      size="lg"
+      className="bg-green-600 hover:bg-green-700 min-w-[120px]"
+    >
+      About Us
+      <BookOpenText className="ml-2 h-5 w-5" />
+    </Button>
+  </Link>
+  <Link href="/contact">
+    <Button
+      size="lg"
+      className="bg-green-600 hover:bg-green-700 min-w-[120px]"
+    >
+      Contact Us
+      <Mail className="ml-2 h-5 w-5" />
+    </Button>
+  </Link>
+</div>
+</div>
           </div>
         </section>
 
         {/* CTA Section */}
         <section className="py-20">
           <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl lg:text-4xl mb-4">Ready to Start Your Coding Journey?</h2>
+            <h2 className="text-3xl lg:text-4xl mb-7">Ready to Start Your Coding Journey?</h2>
             <p className="text-xl text-muted-foreground mb-8">
               Join our community of young programmers and unlock your potential
             </p>

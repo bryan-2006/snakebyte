@@ -27,9 +27,9 @@ export default function Navbar() {
           {/* Right side - Navigation & Auth */}
           <div className="flex items-center space-x-8">
             <div className="flex items-center space-x-6">
-              <Link href="/" className="text-muted-foreground hover:text-foreground transition-colors">
+              {/* <Link href="/" className="text-muted-foreground hover:text-foreground transition-colors">
                 Home
-              </Link>
+              </Link> */}
               <Link href="/courses" className="text-muted-foreground hover:text-foreground transition-colors">
                 Courses
               </Link>
