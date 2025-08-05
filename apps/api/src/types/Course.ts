@@ -1,11 +1,11 @@
 import { ObjectType, Field, Int, Float } from 'type-graphql';
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany} from 'typeorm';
 import { Enrollment } from './Enrollment';
-import { Course as ICourse } from '@snakebyte/shared';
+// import { Course as ICourse } from '@snakebyte/shared';
 
 @Entity()
 @ObjectType()
-export class Course implements ICourse {
+export class Course { // implements ICourse
   @PrimaryGeneratedColumn()
   @Field(() => Int)
   id!: number;

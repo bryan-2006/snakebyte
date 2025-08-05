@@ -15,7 +15,6 @@
     "@apollo/server": "^4.12.2",
     "@mikro-orm/core": "^6.4.16",
     "@mikro-orm/postgresql": "^6.4.16",
-    "@snakebyte/shared": "file:../../packages/shared",
     "@types/pg": "^8.15.4",
     "class-validator": "^0.14.2",
     "compression": "^1.8.1",
