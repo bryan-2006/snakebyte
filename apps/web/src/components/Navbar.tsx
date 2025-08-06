@@ -5,12 +5,18 @@ import Link from 'next/link';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import { Button } from './ui/button';
 import { LogIn, LogOut } from 'lucide-react';
+// import { useRouter } from 'next/navigation';
 
 export default function Navbar() {
   const { data: session, status } = useSession();
+  // const router = useRouter();
 
-  const handleLogout = () => {
-    signOut();
+  const handleLogout = async () => {
+    await signOut({ 
+      callbackUrl: '/',  // Force redirection to home
+      redirect: true      // Ensure redirection happens
+    });
+    // router.push('/'); // Redirect to home after logout
   };
 
   return (
