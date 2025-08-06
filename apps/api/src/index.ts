@@ -52,7 +52,8 @@ async function main() {
   // };
 
   const corsOptions = {
-    origin: ['http://localhost:3000', 'http://localhost:3001'], // Update with your actual domains
+    origin: ['http://localhost:3000', 'http://localhost:3001', 'http://35.183.184.18:3000',
+      'https://snakebyte-ten.vercel.app/', 'http://snakebyte-ten.vercel.app/'], // Update with your actual domains
     credentials: true,
   };
 
