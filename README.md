@@ -36,6 +36,8 @@ rsync -avz \
   --exclude 'node_modules' \
   --exclude '.next' \
   --exclude '.git' \
+  --exclude '.env' \
+  --exclude '.env.local' \
   --exclude 'build' \
   --exclude 'dist' \
   --exclude '.turbo' \
