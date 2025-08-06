@@ -111,11 +111,11 @@ rsync -avz \
 
 ### 3. Rebuild/Restart App
 
-Inside the `~/snakebyte` (`cd ~/snakebyte`) directory, run: 
+Inside the `~/snakebyte` (`cd ~/snakebyte`) directory in the EC2 instance, run: 
 
 ``` bash
-sudo docker compose down
-sudo docker compose up -d --build
+sudo docker-compose down
+sudo docker-compose up -d --build
 ```
 Then start/restart Caddy for reverse proxy/SSL to access from the web.
 If first time running Caddy on instance: ```sudo systemctl start caddy```
