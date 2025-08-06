@@ -10,7 +10,7 @@ I have a long history of code tutoring (for fun and work) with peers and younger
   - [Backend](#backend)
   - [Other / DevOps](#other--devops)
   - [For the Future? (TODO)](#for-the-future-todo)
-- [SnakeByte EC2 Deployment Guide (for Future Me)](#snakebyte-ec2-deployment-guide-for-future-me)
+- [SnakeBytes EC2 Deployment Guide (for Future Me)](#snakebytes-ec2-deployment-guide-for-future-me)
   - [Prerequisites](#prerequisites)
   - [Step-by-Step Deployment](#step-by-step-deployment)
     - [1. SSH into EC2 and Install Requirements](#1-ssh-into-ec2-and-install-requirements)
@@ -56,9 +56,9 @@ I have a long history of code tutoring (for fun and work) with peers and younger
 - **Redis** (Caching content & not soley relying on Supabase)
 
 
-# SnakeByte EC2 Deployment Guide (for Future Me)
+# SnakeBytes EC2 Deployment Guide (for Future Me)
 
-This guide walks you through how to deploy your local SnakeByte project to your AWS EC2 instance using `rsync`, Docker Compose, and Caddy.
+This guide walks you through how to deploy your local SnakeBytes project to your AWS EC2 instance using `rsync`, Docker Compose, and Caddy.
 
 ---
 
@@ -91,6 +91,7 @@ From your **local project root (`snakebyte/`)**, run:
 
 ```bash
 rsync -avz \
+  --exclude 'deploy-snakebytes.sh' \
   --exclude 'node_modules' \
   --exclude '.next' \
   --exclude '.git' \
@@ -122,11 +123,17 @@ If first time running Caddy on instance: ```sudo systemctl start caddy```
 If not: ```sudo systemctl restart caddy```
 
 ### 4. Alternative Deployment: Quick Redeploy SHELL Script?
-Create a script (```deploy.sh```): 
-```bash
+Create a script (```deploy-snakebytes.sh```) in snakebyte @ local: 
+```bash                                         
 #!/bin/bash
 
+if [ ! -f "docker-compose.yml" ]; then
+  echo "Please run this script from your snakebyte project root."
+  exit 1
+fi
+
 rsync -avz \
+  --exclude 'deploy-snakebytes.sh' \
   --exclude 'node_modules' \
   --exclude '.next' \
   --exclude '.git' \
@@ -149,4 +156,4 @@ ssh -i ~/.ssh/calgary-bryan-arch.pem ubuntu@ec2-35-183-184-18.ca-central-1.compu
   sudo systemctl restart caddy
 EOF
 ```
-Make it an executable with ```chmod +x deploy.sh``` and then run it with ```./deploy.sh```. 
+Make it an executable with ```chmod +x deploy-snakebyte.sh``` and then run it with ```./deploy-snakebyte.sh```. 
