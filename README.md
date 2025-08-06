@@ -99,7 +99,6 @@ rsync -avz \
   --exclude '.env.local' \
   --exclude '*/.env' \
   --exclude '*/.env.local' \
-  --exclude '*/.env*' \
   --exclude 'build' \
   --exclude 'dist' \
   --exclude '.turbo' \
@@ -144,7 +143,6 @@ rsync -avz \
   --exclude '.env.local' \
   --exclude '*/.env' \
   --exclude '*/.env.local' \
-  --exclude '*/.env*' \
   --exclude 'build' \
   --exclude 'dist' \
   --exclude '.turbo' \
