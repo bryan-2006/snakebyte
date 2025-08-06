@@ -156,4 +156,4 @@ ssh -i ~/.ssh/calgary-bryan-arch.pem ubuntu@ec2-35-183-184-18.ca-central-1.compu
   sudo systemctl restart caddy
 EOF
 ```
-Make it an executable with ```chmod +x deploy-snakebyte.sh``` and then run it with ```./deploy-snakebyte.sh```. 
+Make it an executable with ```chmod +x deploy-snakebytes.sh``` and then run it with ```./deploy-snakebytes.sh```. 
