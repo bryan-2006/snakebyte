@@ -97,6 +97,9 @@ rsync -avz \
   --exclude '.git' \
   --exclude '.env' \
   --exclude '.env.local' \
+  --exclude '*/.env' \
+  --exclude '*/.env.local' \
+  --exclude '*/.env*' \
   --exclude 'build' \
   --exclude 'dist' \
   --exclude '.turbo' \
@@ -137,6 +140,11 @@ rsync -avz \
   --exclude 'node_modules' \
   --exclude '.next' \
   --exclude '.git' \
+  --exclude '.env' \
+  --exclude '.env.local' \
+  --exclude '*/.env' \
+  --exclude '*/.env.local' \
+  --exclude '*/.env*' \
   --exclude 'build' \
   --exclude 'dist' \
   --exclude '.turbo' \
