@@ -19,10 +19,10 @@ export default function AboutPage() {
             </div>
             <div className="w-full md:w-auto flex-[2] flex flex-col justify-center order-2 md:order-1 text-right">
               <p className="text-xl text-muted-foreground mb-2 max-w-3xl">
-                At <span className="text-green-400 font-semibold">SnakeByte</span>, students are empowered to learn programming through fun, interactive lessons that spark creativity and build real-world skills for tomorrow&apos;s world.
+                At <span className="text-green-400 font-semibold">SnakeBytes</span>, students are empowered to learn programming through fun, interactive lessons that spark creativity and build real-world skills for tomorrow&apos;s world.
               </p>
               <p className="text-xl text-muted-foreground max-w-3xl">
-                Founded by students for students, SnakeByte is built on teaching kids to code easily based off of instructor experience.
+                Founded by students for students, SnakeBytes is built on teaching kids to code easily based off of instructor experience.
               </p>
             </div>
           </div>
@@ -56,7 +56,7 @@ export default function AboutPage() {
             <div className="w-full md:w-auto flex-[2] flex flex-col justify-center order-2 md:order-1">
               <div className="max-w-3xl text-right ml-4space-y-4">
                 <div>
-                  <h3 className="font-semibold text-lg text-green-400">Who can join SnakeByte?</h3>
+                  <h3 className="font-semibold text-lg text-green-400">Who can join SnakeBytes?</h3>
                   <p className="text-muted-foreground">Aimed towards kids, preteens and teens! Check out recommended age listed underneath courses. Be aware of prerequisites for certain courses. Use your judgment when enrolling or reach out to us for guidance.</p>
                   <br />
                 </div>
@@ -96,7 +96,7 @@ export default function AboutPage() {
                 Got more questions or want to learn more about our programs? Reach out to us!
               </p>
               <p className="text-xl text-muted-foreground mb-4 max-w-3xl ml-8 mr-6">
-                Email: <a href="mailto:snakebyte.service@gmail.com" className="text-green-400 hover:underline">snakebyte.service@gmail.com</a>
+                Email: <a href="mailto:snakebytes.help@gmail.com" className="text-green-400 hover:underline">snakebytes.help@gmail.com</a>
               </p>
               <p className="text-xl text-muted-foreground mb-4 max-w-3xl ml-8 mr-6">
                 Or fill out our contact form (provide a phone number if you&apos;d like a call back):

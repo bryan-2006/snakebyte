@@ -20,7 +20,7 @@ export default function Navbar() {
           {/* Left side - Logo/Brand */}
           <Link href="/" className="flex items-center space-x-2">
             {/* <Terminal className="h-8 w-8 text-green-400" /> */}
-            <span className="font-mono text-xl">SnakeByte</span>
+            <span className="font-mono text-xl">SnakeBytes</span>
             {/* <span className="text-green-400 font-mono">&gt;_</span> */}
           </Link>
           

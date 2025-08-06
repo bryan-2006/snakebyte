@@ -9,7 +9,8 @@ export default function ContactPage() {
 
   // You must set up a backend API route or use a service like Formspree, EmailJS, or Resend.
   // This example uses Formspree for simplicity.
-  const FORMSPREE_ENDPOINT = "https://formspree.io/f/xdkddjnv";
+  // const FORMSPREE_ENDPOINT = "https://formspree.io/f/xdkddjnv"; //snakebyte
+  const FORMSPREE_ENDPOINT = "https://formspree.io/f/myzpnozq"; // snakebytes
 //   console.log("Formspree endpoint:", FORMSPREE_ENDPOINT);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

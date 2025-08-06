@@ -5,7 +5,7 @@ import { Toaster } from 'react-hot-toast';
 import { CheckCircle, TriangleAlert} from 'lucide-react';
 
 export const metadata = {
-  title: 'SnakeByte',
+  title: 'SnakeBytes',
   description: 'Learn to code in a fun, interactive way!',
 };
 
