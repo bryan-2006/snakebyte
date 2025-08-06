@@ -34,3 +34,6 @@ pids/
 
 # Certs
 apps/api/certs/*
+
+# Deploy Script
+deploy-snakebytes.sh
