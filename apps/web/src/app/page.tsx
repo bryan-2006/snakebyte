@@ -21,14 +21,14 @@ export default function HomePage() {
     "███████║██║ ╚████║██║  ██║██║  ██╗███████╗",
     "╚══════╝╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝",
     "                                          ",
-    "██████╗ ██x ▔ x██╗████████╗███████╗███████╗",
-    "██╔══██╗╚█▓▃⅄▃▓█╔╝╚══██╔══╝██╔════╝██╔════╝",
-    "██████╔╝ ╚█▓▒▓█╔╝    ██║   █████╗  ███████╗",
-    "██╔══██╗  ╚▓▒▓╔╝     ██║   ██╔══╝  ╚════██║",
-    "██████╔╝   ▓▒▓║      ██║   ███████╗███████║",
-    "╚═════╝    ╚═╝       ╚═╝   ╚══════╝╚══════╝",
+    "██████╗ ██X   X██╗████████╗███████╗       ",
+    "██╔══██╗╚█▓▄⅄▄▓█╔╝╚══██╔══╝██╔════╝       ",
+    "██████╔╝ ╚█▓▒▓█╔╝    ██║   █████╗         ",
+    "██╔══██╗  ╚▓▒▓╔╝     ██║   ██╔══╝         ",
+    "██████╔╝   ▓▒▓║      ██║   ███████╗       ",
+    "╚═════╝    ╚══╝      ╚═╝   ╚══════╝       ",
     "",
-    "Welcome to SnakeBytes! Start your journey as a coder :)",
+    "Welcome to SnakeByte! Start your journey as a coder :)",
     "",
     ">>> login",
     "// Sign in to see your courses",
@@ -42,7 +42,7 @@ export default function HomePage() {
     ">>> contact-us",
     "// Reach out to us",
     "",
-    "student@snakebytes:~$ "
+    "student@snakebyte:~$ "
   ];
 
   // Show cursor after all typing is done
@@ -122,7 +122,7 @@ export default function HomePage() {
                 
                 <div className="text-green-400 min-h-[300px] lg:min-h-[530px]">
                   <div className="mb-4">
-                    <span className="text-green-500 text-sm lg:text-base">student@snakebytes:~$</span>
+                    <span className="text-green-500 text-sm lg:text-base">student@snakebyte:~$</span>
                     <span className="ml-2 text-sm lg:text-base">./welcome.py</span>
                   </div>
                   
@@ -145,8 +145,8 @@ export default function HomePage() {
     } else if (line.startsWith("student@")) {
       textColor = "text-green-500";
     }
-
-    // Special handling for the last line (student@snakebytes:~$)
+    
+    // Special handling for the last line (student@snakebyte:~$)
     if (line.startsWith("student@")) {
       return (
         <div
@@ -207,7 +207,7 @@ export default function HomePage() {
         <section className="py-10 bg-black/20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-3xl lg:text-4xl mb-4">Why Choose SnakeBytes?</h2>
+              <h2 className="text-3xl lg:text-4xl mb-4">Why Choose SnakeByte?</h2>
             </div>
             
             <div className="grid md:grid-cols-3 gap-8 mb-12">
